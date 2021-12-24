@@ -8,7 +8,7 @@ export default function App() {
   
   const cam = useRef().current;
 
-  const takePicture = async() =>{
+  const _takePicture = async() =>{
     const option =  {quality: 0.5,base64: true, skipProcessing: false}
 
     const picture =await cam.takePictureAsync(option)
