@@ -48,7 +48,7 @@ export default function Add({ navigation }) {
     }
   };
 
-  const handleSave = async image  => {
+  const Save = async image  => {
       let cameraPrmissions = await Permissions.getAsync(Permissions.CAMERA_ROLL); 
       if(cameraPrmissions.status !== 'granted') {
         cameraPrmissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
