@@ -37,6 +37,7 @@ export default function Add({ navigation }) {
 
 
   const takePicture = async () => {
+    const option =  {quality: 0.5,base64: true, skipProcessing: true};
     if (camera.current) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
       let photo = await camera.current.takePictureAsync(options);
