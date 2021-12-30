@@ -1,98 +1,112 @@
+import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
+import { StyleSheet, 
+         Text, 
+         View,
+         TextInput,
+         Keyboard,
+         TouchableOpacity,
+         Alert,
+         } from 'react-native';
+import { Button } from 'react-native-web'; 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 export default function App() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  
-  const cam = useRef().current;
-
-  const _takePicture = async() =>{
-    const option =  {quality: 0.5,base64: true, skipProcessing: false}
-
-    const picture =await cam.takePictureAsync(option)
-
-    if(picture.source){
-      conole.log(picture.source);
-    }
-  };
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
   return (
+    
     <View style={styles.container}>
-      
-      <Camera ref={cam} style={styles.camera} type={type}>
-        
-        <View style={styles.buttonContainer}>
-          
-        <View style={{flexDirection: 'row',}}>
-        
-        <View>
-        <TouchableOpacity
-            style={styles.button}
-            onPress={() => _takePicture}>
-            <Text style={styles.text}> Take </Text>
-            
-          </TouchableOpacity>
 
-        </View>
-        
-        
-        
-        <View>
-        <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-            <Text style={styles.text}> Reverse </Text>
-            
-          </TouchableOpacity>
-        </View>
-         
-        </View>
-        </View>
-      </Camera>
+    <Text style={styles.logintext}>Emotion Dectection</Text>
+
+    <Text>Hello,User</Text>
+
+    <View style={styles.container2}>
+    <Text style={styles.Menutext}>Menu</Text>
+    
+    {/*Button Camera Demo*/}
+    <TouchableOpacity style={styles.buttonAs} onPress={() => navigation.navigate('camera')}>
+
+    <Text style={styles.logintext2}>
+      Camera
+    </Text>
+
+    </TouchableOpacity>
+
+  
+   {/*Button Information Demo*/}
+
+   <TouchableOpacity style={styles.buttonAs} onPress={() => navigation.navigate('camera')}>
+
+<Text style={styles.logintext2}>
+  Infomation
+</Text>
+
+</TouchableOpacity>
+     
+   {/*Button History Demo*/}
+
+   <TouchableOpacity style={styles.buttonAs} onPress={() => {Alert.alert('Enter History');}}>
+
+<Text style={styles.logintext2}>
+History
+</Text>
+
+</TouchableOpacity>  
+    </View>
+    
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  camera: {
-    flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    margin: 20,
-  },
-  button: {
-    flex: 0.1,
-    alignSelf: 'flex-end',
+    backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent:'center',
+   
+
   },
-  text: {
-    fontSize: 18,
-    color: 'white',
+
+  container2: {
+    flex:0.7,
+    alignItems:'center',
+    flexDirection:'column',
+    justifyContent:'space-evenly',
+
   },
+
+  logintext:{
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+
+  Menutext:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+
+  logintext2:{
+    fontSize: 15,
+    fontWeight: '500',
+
+  },
+
+  buttonAs:{
+    paddingVertical: 10,
+    paddingHorizontal:110,
+    borderRadius:30,
+    borderWidth:2,
+    borderColor:'#8E05C2',
+    
+  },
+  
+
+  
+  
+ 
 });
+
