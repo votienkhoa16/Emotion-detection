@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import * as MediaLibrary from "expo-media-library";
+import CameraRoll from '@react-native-community/cameraroll';
 import * as Permissions from "expo-permissions";
+import * as MediaLibrary from "expo-media-library";
+
 export default function Add({ navigation }) {
   const [cameraPermission, setCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [imageUri, setImageUri] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [image, setImage] = useState(null);
+  const [useCamera, setUseCamera] = useState(false);
+  const cameraRef = useRef(null);
+
+
 
   const permisionFunction = async () => {
    
@@ -37,15 +45,19 @@ export default function Add({ navigation }) {
 
 
   const takePicture = async () => {
-    const option =  {quality: 0.5,base64: true, skipProcessing: true};
-    if (camera.current) {
-      const options = { quality: 0.5, base64: true, skipProcessing: true };
-      let photo = await camera.current.takePictureAsync(options);
-      console.log(camera.current.getSupportedRatiosAsync());
-      const source = photo.uri;
-      camera.current.pausePreview();
-      await handleSave(source);
-      camera.current.resumePreview();
+    if (cameraRef) {
+      console.log('in take picture');
+      try {
+        let photo = await cameraRef.current.takePictureAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+        console.debug(photo);
+        return photo;
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -77,21 +89,99 @@ export default function Add({ navigation }) {
     }
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.cameraContainer}>
-        <Camera
-          ref={(ref) => setCamera(ref)}
-          style={styles.fixedRatio}
-          type={type}
-          ratio={'1:1'}
-        />
-      </View>
-
-      <Button title={'Take Picture'} onPress={takePicture} />
-      <Button title={'Reverse'}> Reverse </Button>
-      <Button title={'Save'} onPress={Save}/>
-      {imageUri && <Image source={{ uri: imageUri }} style={{ flex: 1 }} />}
+   return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      {useCamera ? (
+        <View>
+          <Camera style={styles.camera} type={type} ref={cameraRef}>
+            <View style={{ flex: 9 }}></View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  setUseCamera(false);
+                }}>
+                <Text style={styles.text}>CANCEL</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  setType(
+                    type === Camera.Constants.Type.back
+                      ? Camera.Constants.Type.front
+                      : Camera.Constants.Type.back
+                  );
+                }}>
+                <Text style={styles.text}>Flip</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button]}
+                onPress={async () => {
+                  console.log('in take pic');
+                  const r = await takePicture();
+                  setUseCamera(false);
+                  if (!r.cancelled) {
+                    setImage(r.uri);
+                  }
+                  console.log('response', JSON.stringify(r));
+                }}>
+                <Text style={styles.text}>PICTURE</Text>
+              </TouchableOpacity>
+            </View>
+          </Camera>
+        </View>
+      ) : (
+        <>
+          <View style={{ width: '100%' }}>
+            <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <TouchableOpacity
+                style={[styles.button]}
+                onPress={async () => {
+                  console.log('in pick photo');
+                  const r = await pickImage();
+                  if (!r.cancelled) {
+                    setImage(r.uri);
+                  }
+                  console.log('response', JSON.stringify(r));
+                }}>
+                <Text style={styles.text}> PICK PICTURE </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button]}
+                onPress={async () => {
+                  console.log('in pick camera');
+                  setUseCamera(true);
+                }}>
+                <Text style={styles.text}> PICK CAMERA </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button]}
+                onPress={Save}
+                >
+                <Text style={styles.text}> SAVE </Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{ width: '100%', alignItems: 'center' }}>
+              {true && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 200, height: 200, backgroundColor: 'blue' }}
+                  Save
+                />
+              )}
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 }
@@ -100,18 +190,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  cameraContainer: {
+  camera: {
     flex: 1,
-    flexDirection: 'row',
   },
-  fixedRatio: {
+  buttonContainer: {
+    flexDirection: 'row',
+    minWidth: '100%',
     flex: 1,
-    aspectRatio: 1,
   },
   button: {
-    flex: 0.1,
-    padding: 10,
-    alignSelf: 'flex-end',
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+    height: 40,
+    margin: 8,
+    backgroundColor: 'grey',
+  },
+  text: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
