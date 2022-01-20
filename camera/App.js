@@ -38,24 +38,22 @@ export default function App() {
         
         <View style={styles.buttonContainer}>
           
+       
         <View>
-        <View >
         <TouchableOpacity
-             style={{
+            style={{
             width: 70,
             height: 70,
-            bottom: 0,
+            bottom:10,
             borderRadius: 60,
             backgroundColor: '#fff',
-            position: 'absolute',
-            flex: 1,
-            padding: 10,
-            alignItems:'center',
+            marginTop:'765%',
+          
             }}
             onPress={() => _takePicture}>
           </TouchableOpacity>
         </View>
-        </View>
+       
         </View>
       </Camera>
     </SafeAreaView>
@@ -69,6 +67,9 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
   buttonContainer: {
     flex: 1,
@@ -76,5 +77,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     margin: 20,
     alignItems:'center',
+    
   },
 });
