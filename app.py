@@ -5,12 +5,8 @@ from flask.json import jsonify
 import base64
 from flask_cors import CORS, cross_origin
 import os
-import sys
-
 from markupsafe import string
-# import emotion detection
 from emotion_detection import analyze
-#import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -20,17 +16,30 @@ cors = CORS(app)
 # get the image from client (byte)
 def image():
     if(request.method == "POST"):
+        # get the encrypted data
         bytesOfImage = request.get_data()
         print("Image Read!!!")
+    # encrypt the data to base64
     stringBase64 = base64.b64encode(bytesOfImage)
-    with open('text.txt', 'wb') as out:
-        out.write(stringBase64)
-    # get base64 path
-    # analyze(stringBase64)
-    # print(imageBase64)
-    # return(stringBase64)
-    return("read!!!!")
+
+    # check if the file exists, delete the file first
+    if (os.path.exists("savedimage.jpeg") == True):
+        os.remove("savedimage.jpeg")
+        # create the image from stringBase64
+        with open('savedimage.jpeg', 'wb') as out:
+            out.write(base64.b64decode(stringBase64))
+        # analyze the image
+        detectedEmotion = analyze("savedimage.jpeg")
+        print(detectedEmotion)
+        os.remove("savedimage.jpeg")
+    else:
+        with open('savedimage.jpeg', 'wb') as out:
+            out.write(base64.b64decode(stringBase64))
+        detectedEmotion = analyze("savedimage.jpeg")
+        os.remove("savedimage.jpeg")
+
+    return(detectedEmotion)
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.0.2', port=3000, debug=True)
+    app.run(host='192.168.0.103', port=3000, debug=True)
