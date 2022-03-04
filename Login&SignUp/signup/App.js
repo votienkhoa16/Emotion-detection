@@ -23,10 +23,10 @@ const FlatListBasics = () => {
           keyboardType='username' autoCapitalize={false}/>
 
           <TextInput  style={styles.EmailInput} placeholder={'password'} textContentType='password'
-          securedTextEntry={passwordSecured} />
+         secureTextEntry={true}/>
 
            <TextInput  style={styles.EmailInput} placeholder={'Repassword'} textContentType='Retype password'
-          securedTextEntry={passwordSecured} />
+          secureTextEntry={true}/>
 
           <TouchableOpacity style={styles.Button}><Text>Sign Up</Text></TouchableOpacity>
 
