@@ -5,6 +5,7 @@ import cv2 as cv
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
+import os
 
 
 def calculatePredictions(emotionPredictions, sumOfPredictions):
@@ -89,10 +90,5 @@ def analyze(imgPath, models=None, enforce_detection=True, detectorBackend='openc
             happyAccuracy), str(sadAccuracy), str(supriseAccuracy), str(neutralAccuracy), dominantEmotion)
 
         analyzeText = '/'.join(analyzeTuple)
+        os.remove(imgPath)
     return analyzeText
-
-
-if __name__ == "__main__":
-    test1 = analyze("test.jpg")
-    print(type(test1))
-    print(test1)

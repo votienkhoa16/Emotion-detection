@@ -12,9 +12,11 @@ import { StyleSheet,
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CameraScreen from './CameraScreen';
+import resultScreen from './resultScreen';
+import loginScreen from './loginscreen';
 
 //home screen
-function HomeScreen({navigation}) {
+function HomeScreen(props) {
   return (
     
     <View style={styles.container}>
@@ -27,7 +29,7 @@ function HomeScreen({navigation}) {
     <Text style={styles.Menutext}>Menu</Text>
     
     {/*Button Camera Demo*/}
-    <TouchableOpacity style={styles.buttonAs} onPress={() => navigation.navigate('Camera')}>
+    <TouchableOpacity style={styles.buttonAs} onPress={() => props.navigation.navigate('Camera')}>
 
     <Text style={styles.logintext2}>
       Camera
@@ -37,7 +39,7 @@ function HomeScreen({navigation}) {
 
    {/*Button Information Demo*/}
 
-    <TouchableOpacity style={styles.buttonAs} onPress={() => navigation.navigate('Camera')}>
+    <TouchableOpacity style={styles.buttonAs} onPress={() => props.navigation.navigate('Result')}>
 
     <Text style={styles.logintext2}>
         Infomation
@@ -48,8 +50,8 @@ function HomeScreen({navigation}) {
     {/*Button History Demo*/}
 
     <TouchableOpacity style={styles.buttonAs} onPress={() => {
-      
-      Alert.alert('respone');
+      alert("information tapped!")
+      //navigation.navigate('Information')
     }}>
 
     <Text style={styles.logintext2}>
@@ -69,11 +71,18 @@ const Stack = createNativeStackNavigator();
 //main app here
 //normally, main app is used for navigate screens in stack
 function App(){
+  const [state, setState] = useState({
+    isSignedIn: false,
+  })
+
     return(
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Camera" component={CameraScreen} />
+            <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Camera" component={CameraScreen} />
+            <Stack.Screen name="Result" component={resultScreen} />
+            </>
         </Stack.Navigator>
       </NavigationContainer>  
     );

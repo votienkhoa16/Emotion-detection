@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, 
          Text, 
@@ -183,8 +182,5 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontSize:20,
     borderRadius:4,
-
   },
-
- 
 });
