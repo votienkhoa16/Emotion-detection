@@ -45,7 +45,7 @@ function CameraScreen(props){
     let url = "http://10.123.1.234:3000/image";
 
     type === "image"
-      ? ((route = "/"), (contentType = "image/jpeg")):
+      ? ((route = ""), (contentType = "image/jpeg")):
       
     url;
 
@@ -58,7 +58,7 @@ function CameraScreen(props){
     });
 
     if (respone){
-      console.log(respone.headers);
+      console.log(respone);
       props.navigation.navigate('Result');
     }
     else {

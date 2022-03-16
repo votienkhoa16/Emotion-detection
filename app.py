@@ -130,19 +130,23 @@ def getImage():
         # get the encrypted data
         bytesOfImage = request.get_data()
         print("Image Read!!!")
-    # encrypt the data to base64
-    stringBase64 = base64.b64encode(bytesOfImage)
+        # encrypt the data to base64
+        stringBase64 = base64.b64encode(bytesOfImage)
 
-   # decrypt base64 to img
-    with open('savedimage.jpeg', 'wb') as out:
-        out.write(base64.b64decode(stringBase64))
+        # check if there is a image file in server
+        if(os.path.exists("savedimage.jpeg")):
+            os.remove('savedimage.jpeg')
+        # decrypt base64 to img
+        with open('savedimage.jpeg', 'wb') as out:
+            out.write(base64.b64decode(stringBase64))
 
-    return jsonify("Image Read!!!!")
+        return jsonify("Image Read!!!!")
 
 
 @app.route("/get", methods=['GET'])
 def responeAnalyze():
     result = analyze('savedimage.jpeg')
+    os.remove("savedimage.jpeg")
     return jsonify(result)
 
 

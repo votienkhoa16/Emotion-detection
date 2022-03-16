@@ -10,7 +10,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "permissions":["ACCESS_FINE_LOCATION", "READ_EXTERNAL_STORAGE"],
     "plugins": [
       [
         "expo-image-picker",

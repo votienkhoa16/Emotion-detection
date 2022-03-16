@@ -12,8 +12,9 @@ import { StyleSheet,
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CameraScreen from './CameraScreen';
-import resultScreen from './resultScreen';
+import resultScreen from './ResultScreen';
 import loginScreen from './loginscreen';
+import ResultScreen from './ResultScreen';
 
 //home screen
 function HomeScreen(props) {
@@ -81,7 +82,7 @@ function App(){
             <>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Camera" component={CameraScreen} />
-            <Stack.Screen name="Result" component={resultScreen} />
+            <Stack.Screen name="Result" component={ResultScreen} />
             </>
         </Stack.Navigator>
       </NavigationContainer>  

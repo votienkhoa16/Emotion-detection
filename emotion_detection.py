@@ -86,9 +86,42 @@ def analyze(imgPath, models=None, enforce_detection=True, detectorBackend='openc
         # get predicted emotion
         dominantEmotion = emotionLabels[np.argmax(emotionPredictions)]
         print("Predicted emotion: ", dominantEmotion)
+
+        # label advice with predicted emotion
+        advices = getAdvice(dominantEmotion)
+
         analyzeTuple = (str(angryAccuracy), str(disgustAccuracy), str(fearAccuracy), str(
-            happyAccuracy), str(sadAccuracy), str(supriseAccuracy), str(neutralAccuracy), dominantEmotion)
+            happyAccuracy), str(sadAccuracy), str(supriseAccuracy), str(neutralAccuracy), dominantEmotion, advices)
 
         analyzeText = '/'.join(analyzeTuple)
-        os.remove(imgPath)
+        print(analyzeText)
     return analyzeText
+
+# giving advice for user
+
+
+def getAdvice(detectedEmotion):
+    words = ""
+    if (detectedEmotion == 'happy'):
+        words = "You must've been having a nice day!"
+
+    if (detectedEmotion == 'fear'):
+        words = "Fear is natural! But don't let it control you. Leave it aside and you can forget it."
+
+    if (detectedEmotion == 'angry'):
+        words = "You must be angry with someone and it may be not worth. Just try to calm yourself. Maybe a good humor video can help you."
+
+    if (detectedEmotion == 'sad'):
+        words = "I see you have a rough day. I can have some lo-fi musics that can help you relax. Would you like to listen to it?"
+
+    if (detectedEmotion == 'surprise'):
+        words = "There is something that surprise you, isn't it? Hope you can share with me."
+
+    if (detectedEmotion == 'neutral'):
+        words = "Your face is very neutral and calm. Maybe today is a peaceful day for you, isn't it?"
+
+    return words
+
+
+if __name__ == "__main__":
+    analyze("test.jpg")
