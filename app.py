@@ -19,6 +19,8 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 
+from SendEmail import send_email
+
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -150,5 +152,13 @@ def responeAnalyze():
     return jsonify(result)
 
 
+@app.route("/email", methods=['POST'])
+def sendEmailFunction():
+    email = request.json['email']
+    body = request.json['body']
+    send_email(email, body)
+    return "email recived!"
+
+
 if __name__ == "__main__":
-    app.run(host='10.123.1.234', port=3000, debug=True)
+    app.run(host='10.123.0.247', port=3000, debug=True)

@@ -2,7 +2,7 @@ import React, { Component, useRef, useState, useEffect } from "react";
 import { StyleSheet, View, Image, Touchable, TouchableOpacity, SafeAreaView, Text, Alert } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import * as FS from 'expo-file-system';
-
+//import isLoggedin from "./App";
 //Camera screen and function
 function CameraScreen(props){
 
@@ -42,7 +42,7 @@ function CameraScreen(props){
     let type = imageFile.type;
     let route = "";
     let contentType = "";
-    let url = "http://10.123.1.234:3000/image";
+    let url = global.api + "image";
 
     type === "image"
       ? ((route = ""), (contentType = "image/jpeg")):

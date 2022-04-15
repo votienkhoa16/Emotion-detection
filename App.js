@@ -15,8 +15,14 @@ import CameraScreen from './CameraScreen';
 import resultScreen from './ResultScreen';
 import loginScreen from './loginscreen';
 import ResultScreen from './ResultScreen';
+import EmailScreen  from './SendEmail';
 
-//home screen
+//[isLoggedin, setLoggedin] = useState(false);
+
+//global api link
+global.api = "http://10.123.0.247:3000/"
+
+//home screen 
 function HomeScreen(props) {
   return (
     
@@ -59,6 +65,15 @@ function HomeScreen(props) {
     History
     </Text>
 
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.buttonAs} onPress={() => {
+     props.navigation.navigate('Email')
+    }}>
+
+    <Text style={styles.logintext2}>
+    Send Email
+    </Text>
+
     </TouchableOpacity>  
     </View>
     
@@ -83,6 +98,7 @@ function App(){
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Camera" component={CameraScreen} />
             <Stack.Screen name="Result" component={ResultScreen} />
+            <Stack.Screen name="Email" component={EmailScreen} />
             </>
         </Stack.Navigator>
       </NavigationContainer>  

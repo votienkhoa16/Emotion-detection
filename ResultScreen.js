@@ -9,16 +9,17 @@ import { StyleSheet,
          SafeAreaView,
          ScrollView,
          Linking,
-         Modal
+         Modal,
+         Button
          } from 'react-native';
-import axios from 'axios';
+import { TextInput } from 'react-native-gesture-handler';
 
 export default function ResultScreen(props) {
 
   //front-end values
-  const [modalVisible, setModalVisible,] = useState(false);
-  const [isChecked, setChecked]= useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   //emotion accuracy values
   //'angry' = 0, 'disgust' = 1, 'fear' = 2, 'happy' = 3, 'sad' = 4, 'suprise' = 5, 'neutral' = 6
@@ -33,8 +34,10 @@ export default function ResultScreen(props) {
 
   //set advices
   const [advice, setAdvice] = useState();
+  //set protector email
+  const [email, setEmail] = useState("");
 
-  const api = 'http://10.123.1.234:3000/get'
+  const api = global.api + 'get'
 
   const [result, setResult] = useState([]);
 
@@ -51,7 +54,11 @@ export default function ResultScreen(props) {
         getAccuracyValueFromString(data);
         setLoading(false);
       })
-      .catch(e => console.log(e))
+      .catch(error => {
+        console.log(error);
+        setError(true);
+        setLoading(false);
+      })
   }
 
   function getAccuracyValueFromString(dataJson) {
@@ -73,6 +80,26 @@ export default function ResultScreen(props) {
     setAdvice(emotionValues[8]);
   }
 
+  //send email
+  const sendEmail = () => {
+
+    //get the body email
+    let bodyEmail = "User are " + predictedEmotion;
+    console.log(bodyEmail)
+    fetch(global.api + 'email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: email, body: bodyEmail})
+    })
+    .then(resp => {
+      console.log("sent!");
+    })
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+  }
+
   useEffect(() => {
     getResult();
   }, []);
@@ -83,10 +110,17 @@ export default function ResultScreen(props) {
         <Text>Loading....</Text>
       </View>
     );
-  } else{
+  } else if(error == true){
+    return(
+      <View>
+        <Text>The app couldn't take your face. Please try again!</Text>
+      </View>
+    );
+  } 
+  
+  else{
     return (
       <ScrollView style={styles.container}>
-  
   
         <Modal
           animationType="slide"
@@ -95,76 +129,20 @@ export default function ResultScreen(props) {
           onRequestClose={() => {
             setModalVisible(!modalVisible);
           }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalQuestion}>Do You have no Interest or Pleasure ?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-  
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-  
-                <Text style={styles.modalQuestion}>How long is your sadness lasted ?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-  
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-  
-                
-                <Text style={styles.modalQuestion}>Have you recently losing energy ?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-  
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-  
-                
-                <Text style={styles.modalQuestion}>Are you having sleep difficulty ?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-  
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-  
-                
-                <Text style={styles.modalQuestion}>Do you have difficult concentration?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-  
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-  
-                
-                <Text style={styles.modalQuestion}>Do you recently blame yourself ?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-  
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-  
-                
-                <Text style={styles.modalQuestion}>Does Your Sadness Affect your Daily Life?</Text>
-                <View style={styles.section}>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>Yes</Text>
-                  <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                  <Text style={styles.paragraph}>No</Text>
-                </View>
-            </View>
-          </View>
+          <Text>Please input your protector's email</Text>
+          <TextInput
+          label = "Protector's email"
+          value = {email}
+          mode = "outlined"
+          onChangeText = {text => setEmail(text)}>
+          </TextInput>
+
+          <Button
+          style = {{magin:10}}
+          mode = "contained"
+          title = "Send"
+          onPress={() => sendEmail()}>
+          </Button>
         </Modal>
   
       <Text style={styles.logintext}>Result</Text>
@@ -214,7 +192,7 @@ export default function ResultScreen(props) {
    
 }
 const styles = StyleSheet.create({
-  container: {
+  resultContainer: {
     flex: 1,
     
     backgroundColor: '#8E05C2',

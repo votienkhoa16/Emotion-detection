@@ -1,3 +1,5 @@
+from distutils.log import error
+from black import nullcontext
 from deepface import DeepFace
 from deepface.commons import functions, realtime, distance as dst
 import cv2 as cv
@@ -50,6 +52,7 @@ def analyze(imgPath, models=None, enforce_detection=True, detectorBackend='openc
         img, region = functions.preprocess_face(img=imgPath, target_size=(
             48, 48), grayscale=True, enforce_detection=enforce_detection, detector_backend=detectorBackend, return_region=True)
 
+        # Check Value error
         # get number of prediction
         emotionPredictions = models['emotion'].predict(img)[0, :]
 
@@ -95,6 +98,7 @@ def analyze(imgPath, models=None, enforce_detection=True, detectorBackend='openc
 
         analyzeText = '/'.join(analyzeTuple)
         print(analyzeText)
+
     return analyzeText
 
 # giving advice for user
@@ -124,4 +128,7 @@ def getAdvice(detectedEmotion):
 
 
 if __name__ == "__main__":
+    email = "otakutonyvo16@gmail.com"
+    body = "This is a test email! Please do not respond."
+
     analyze("test.jpg")
