@@ -152,9 +152,8 @@ export default function App() {
   return (
     <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name='Tab A' component={Login} />
-
-      <Tab.Screen name='Tab B' component={TabB} />
+      <Tab.Screen options={{ headerShown: false }} name='Tab A' component={Login} />
+      <Tab.Screen options={{ headerShown: false }} name='Tab B' component={TabB} />
     </Tab.Navigator>
   </NavigationContainer>
   );
