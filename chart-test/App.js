@@ -83,7 +83,7 @@ export default function CircleBackground() {
         style={{
           marginVertical: 4,
           borderRadius: 0,
-          marginBottom:40,
+          marginBottom:4,
           top: 10,
         }}
       />
@@ -97,7 +97,24 @@ export default function CircleBackground() {
           </Card>
           </View>
         </View>
-        
+  
+  <View style={styles.hr}></View>
+       <View style={styles.centerizedView2}>
+          <View style={styles.authBox2}>
+          <Card>
+          <Text style={styles.reslve2}>Advisor</Text>
+          </Card>
+          </View>
+        </View>
+
+  <View style={styles.hr}></View>
+       <View style={styles.centerizedView2}>
+          <View style={styles.authBox2}>
+          <Card>
+          <Text style={styles.reslve2}>Advisor</Text>
+          </Card>
+          </View>
+        </View>
         
         
         
@@ -159,7 +176,7 @@ const styles = StyleSheet.create({
    reslve: {
     fontSize: 30,
     textAlign:'center',
-    top : 35,
+    top : 45,
   },
 
  box: {
@@ -182,15 +199,14 @@ const styles = StyleSheet.create({
    
    
   },
-
+//Adivsing
    centerizedView2: {
     width: '100%',
-    bottom : 120,
+    bottom : 130,
   },
  authBox2: {
     width: '100%',
     backgroundColor: '#fafafa',
-   
     alignSelf: 'center',
     paddingHorizontal: 5,
     paddingBottom: 80,
