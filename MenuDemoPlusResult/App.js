@@ -18,6 +18,7 @@ import {
   Feather,
   SimpleLineIcons,
   MaterialCommunityIcons,
+  Entypo,
 } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -142,8 +143,8 @@ function Home({ navigation }) {
               },
             ]}
             onPress={() => Alert.alert('Button Pressed!')}>
-            <MaterialCommunityIcons name="book" size={30} color="black" />
-            <Text>History</Text>
+            <Entypo name="log-out" size={30} color="black" />
+            <Text>LogOut</Text>
           </Pressable>
         </View>
       </View>
@@ -174,7 +175,7 @@ function Details({ navigation }) {
           key={i.toString()}
         />
       ))}
-
+<Swiper>
       <LineChart
         data={{
           labels: ['Happy', 'Neutral', 'Sad', 'Suprise', 'Scared', 'Angry'],
@@ -207,9 +208,10 @@ function Details({ navigation }) {
         style={{
           marginVertical: 8,
           borderRadius: 16,
+      
         }}
       />
-    <Swiper>
+    
       <LinearGradient
         colors={['#6190E8', '#A7BFE8']}
         start={{
