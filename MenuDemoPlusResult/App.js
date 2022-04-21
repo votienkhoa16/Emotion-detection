@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import {
-  Text,
+import {Text,
   View,
   StyleSheet,
   Dimensions,
@@ -11,6 +10,7 @@ import {
   Alert,
   FlatList,
   Button,
+  ScrollView,
 } from 'react-native';
 import Constants from 'expo-constants';
 import {
@@ -34,14 +34,18 @@ import {
 } from 'react-native-chart-kit';
 
 import Swiper from 'react-native-swiper';
-import HisList from './Hislist';
+import HisList from './components/Hislist';
+import Result from './components/Detail';
+import RegandSign from './components/loginandsignin';
+
+
 
 const { width } = Dimensions.get('screen');
 const colors = ['#6190E8', '#A7BFE8'];
 const Stack = createNativeStackNavigator();
 
-//MEnu Screen
-function Home({ navigation }) {
+//MEnu Screen // Home
+export default function App() {
   return (
     <View style={styles.container}>
       {colors.map((x, i) => (
@@ -100,7 +104,7 @@ function Home({ navigation }) {
                 backgroundColor: pressed ? '#6190E8' : '#fff',
               },
             ]}
-            onPress={() => navigation.navigate('Hislist')}>
+            onPress={() => navigation.navigate('History')}>
             <Feather name="book" size={30} color="black" />
             <Text>History</Text>
           </Pressable>
@@ -123,8 +127,8 @@ function Home({ navigation }) {
               },
             ]}
             onPress={() => Alert.alert('Button Pressed!')}>
-            <SimpleLineIcons name="camerao" size={30} color="black" />
-            <Text>Camera</Text>
+            <SimpleLineIcons name="detail" size={30} color="black" />
+            <Text>Details</Text>
           </Pressable>
         </View>
 
@@ -142,7 +146,7 @@ function Home({ navigation }) {
                 backgroundColor: pressed ? '#6190E8' : '#fff',
               },
             ]}
-            onPress={() => Alert.alert('Button Pressed!')}>
+           onPress={() => navigation.navigate('logout')}>
             <Entypo name="log-out" size={30} color="black" />
             <Text>LogOut</Text>
           </Pressable>
@@ -153,178 +157,10 @@ function Home({ navigation }) {
 }
 //MEnu Screen End
 
-//Chart Result
-function Details({ navigation }) {
-  return (
-    <View style={styles.container2}>
-      {colors.map((x, i) => (
-        <View
-          style={[
-            styles.bgCircle1,
-            {
-              backgroundColor: x,
-              transform: [
-                { translateX: -(width / 6) + (i * width) / colors.length },
-                {
-                  translateY:
-                    -(width * 0.6) - ((i / 1.25) * width) / colors.length,
-                },
-              ],
-            },
-          ]}
-          key={i.toString()}
-        />
-      ))}
-<Swiper>
-      <LineChart
-        data={{
-          labels: ['Happy', 'Neutral', 'Sad', 'Suprise', 'Scared', 'Angry'],
-          datasets: [
-            {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
-              strokeWidth: 2,
-            },
-          ],
-        }}
-        width={Dimensions.get('window').width - 16}
-        height={200}
-        chartConfig={{
-          backgroundColor: '#fff',
-          backgroundGradientFrom: '#fff',
-          backgroundGradientTo: '#ffff',
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(107,144,232, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-      
-        }}
-      />
-    
-      <LinearGradient
-        colors={['#6190E8', '#A7BFE8']}
-        start={{
-          x: 0,
-          y: 0,
-        }}
-        end={{
-          x: 1,
-          y: 1,
-        }}
-        style={styles.box}>
-        <Text style={styles.title2}>Result</Text>
-        <View style={styles.dtview}>
-        
-          <Text style={styles.resultdt}>Happy</Text>
-          <Text style={styles.resultdt}>Sad</Text>
-        </View>
-        <View style={styles.dtview}>
-          <Text style={styles.resultdt}>Neutrual</Text>
-          <Text style={styles.resultdt}>Suprised</Text>
-        </View>
-        <View style={styles.dtview}>
-          <Text style={styles.resultdt}>Scared</Text>
-          <Text style={styles.resultdt}>Angry</Text>
-        </View>
-      </LinearGradient>
 
-           <LinearGradient
-        colors={['#6190E8', '#A7BFE8']}
-        start={{
-          x: 0,
-          y: 0,
-        }}
-        end={{
-          x: 1,
-          y: 1,
-        }}
-        style={styles.box}>
-        <Text style={styles.title2}>Result</Text>
-        <View style={styles.dtview}>
-        
-          <Text style={styles.resultdt}>Happy</Text>
-          <Text style={styles.resultdt}>Sad</Text>
-        </View>
-        <View style={styles.dtview}>
-          <Text style={styles.resultdt}>Neutrual</Text>
-          <Text style={styles.resultdt}>Suprised</Text>
-        </View>
-        <View style={styles.dtview}>
-          <Text style={styles.resultdt}>Scared</Text>
-          <Text style={styles.resultdt}>Angry</Text>
-        </View>
-      </LinearGradient>
-
-       </Swiper>
-    </View>
-   
-  );
-}
-//Chart Result End
-
-//History
-function History({ navigation }) {
-  return (
-    <View style={styles.container}>
-      {colors.map((x, i) => (
-        <View
-          style={[
-            styles.bgCircle1,
-            {
-              backgroundColor: x,
-              transform: [
-                { translateX: -(width / 6) + (i * width) / colors.length },
-                {
-                  translateY:
-                    -(width * 0.6) - ((i / 1.25) * width) / colors.length,
-                },
-              ],
-            },
-          ]}
-          key={i.toString()}
-        />
-      ))}
-    </View>
-  );
-}
-
-//History End
 
 //NavScreen
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={Home}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Details"
-          component={Details}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="History"
-          component={HisList}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+
 
 const styles = StyleSheet.create({
   //HOME
@@ -359,38 +195,8 @@ const styles = StyleSheet.create({
     top: 50,
   },
 
-  //Result
+  
+ 
 
-  container2: {
-    paddingTop: 100,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  box: {
-    width: '100%',
-    height: 400,
-    borderRadius: 16,
-  },
-
-  title2: {
-    marginTop: 0,
-    textAlign: 'center',
-    fontSize: 30,
-    fontWeight: '400',
-    fontStyle: 'Oswald',
-    color: '#FFF',
-  },
-
-  dtview: {
-    flexDirection: 'row',
-  },
-
-  resultdt: {
-    fontStyle: 'Oswald',
-    color: '#FFF',
-    fontSize: 25,
-    margin: 30,
-  },
+  
 });
