@@ -27,16 +27,16 @@ function Item({ item }) {
 }
 
 const data = [
-  { id: '1', title: 'First item' ,Satus: 'Happy',Date:'00/00/00' },
-  { id: '2', title: 'Second item' ,Satus: 'Happy',Date:'00/00/00' },
-  { id: '3', title: 'Third item' ,Satus: 'Happy' ,Date:'00/00/00' },
-  { id: '4', title: 'Fourth item' ,Satus: 'Happy',Date:'00/00/00'},
-  { id: '5', title: 'Fifth item' ,Satus: 'Happy' ,Date:'00/00/00' },
-  { id: '6', title: 'Sixth item' ,Satus: 'Happy',Date:'00/00/00'},
-  { id: '7', title: 'Seventh item' ,Satus: 'Happy' ,Date:'00/00/00'},
-  { id: '8', title: 'Eight item' ,Satus: 'Happy',Date:'00/00/00'},
-  { id: '9', title: 'Eight item' ,Satus: 'Happy',Date:'00/00/00' },
-  { id: '10', title: 'Eight item',Satus: 'Happy',Date:'00/00/00' },
+  { id: '1', title: 'First item' ,Satus: 'Happy' },
+  { id: '2', title: 'Second item' ,Satus: 'Happy' },
+  { id: '3', title: 'Third item' ,Satus: 'Happy' },
+  { id: '4', title: 'Fourth item' ,Satus: 'Happy'},
+  { id: '5', title: 'Fifth item' ,Satus: 'Happy' },
+  { id: '6', title: 'Sixth item' ,Satus: 'Happy'},
+  { id: '7', title: 'Seventh item' ,Satus: 'Happy' },
+  { id: '8', title: 'Eight item' ,Satus: 'Happy'},
+  { id: '9', title: 'Eight item' ,Satus: 'Happy' },
+  { id: '10', title: 'Eight item',Satus: 'Happy' },
 ];
 
 //MenuScreen//Screen1
@@ -55,19 +55,17 @@ export default function Hislist() {
 
 
 
-         <Text style={styles.text}></Text> 
-         <Text style={styles.title}>Emotion Detection</Text> 
+        
        <FlatList
        vertical
-        style={styles.move}
+        pagingEnabled={true}
         showsVerticalScrollIndicator={false}
         data={data}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={styles.listItem}>
             <Text style={styles.listItemText}>Name:{item.title}</Text>
-            <Text style={styles.listItemText}>Date:{item.Date}</Text>
-            <Text style={styles.listItemText2}>Satus:{item.Satus}</Text>
+            <Text style={styles.listItemText}>Satus:{item.Satus}</Text>
           </View>
         )}
       />
@@ -102,41 +100,23 @@ const styles = StyleSheet.create({
 
  
   text: {
-    marginBottom:190,
-  },
-
-
-  title: {
-    bottom: 100,
-    fontSize: 40,
-    fontWeight: '400',
-    fontStyle: 'Oswald',
-    color: '#FFF',
+    fontSize: 20,
+    color: '#101010',
+    marginTop: 60,
+    fontWeight: '700'
   },
 
   listItem: {
     marginTop: 10,
     padding: 20,
+    alignItems: 'center',
     backgroundColor:'#fff',
     width: 300,
     borderRadius:16,
-    
   },
-  
   listItemText: {
-    fontSize: 16,
-    
-  },
-
-  listItemText2: {
-    fontSize: 14,
-    textAlign : "right",
-    bottom: 15,
-    
-  },
-
-  move:{
-    margin: 4,
+    fontSize: 18,
+    textAlign: 'right',
   }
 
    
