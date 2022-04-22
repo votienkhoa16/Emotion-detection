@@ -24,16 +24,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit';
 
-import Swiper from 'react-native-swiper';
+
+
 import HisList from './components/Hislist';
 import Result from './components/Detail';
 import RegandSign from './components/loginandsignin';
@@ -45,7 +38,7 @@ const colors = ['#6190E8', '#A7BFE8'];
 const Stack = createNativeStackNavigator();
 
 //MEnu Screen // Home
-export default function App() {
+function Home({ navigation }) {
   return (
     <View style={styles.container}>
       {colors.map((x, i) => (
@@ -160,7 +153,38 @@ export default function App() {
 
 
 //NavScreen
+export default function App() {
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={Home}
+        />
 
+          <Stack.Screen
+          options={{ headerShown: false }}
+          name="Details"
+          component={Result}
+        />
+        
+      
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="History"
+          component={HisList}
+        />
+
+          <Stack.Screen
+          options={{ headerShown: false }}
+          name="logout"
+          component={RegandSign}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
   //HOME

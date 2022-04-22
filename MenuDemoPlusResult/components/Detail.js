@@ -1,25 +1,25 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, Dimensions,TouchableOpacity,SafeAreaView,ScrollView,Modal,Pressable, TextInput,
-  Image,Keyboard,} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, Dimensions,TouchableOpacity,SafeAreaView,ScrollView,Modal,Pressable, TextInput,Image,Keyboard,} from 'react-native';
+import Checkbox from 'expo-checkbox';
 import Constants from 'expo-constants';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
-import { AntDesign,Feather,SimpleLineIcons,MaterialCommunityIcons } from '@expo/vector-icons';
-import { Chart, Line, Area, HorizontalAxis, VerticalAxis } from 'react-native-responsive-linechart'
+import {LineChart} from "react-native-chart-kit";
+import { Chart, Line, Area, HorizontalAxis, VerticalAxis } from 'react-native-responsive-linechart';
+
+import AssetExample from './AssetExample';
 
 const { width } = Dimensions.get('screen');
-const colors = ['#6190E8', '#A7BFE8', ]
+const colors = ['#6190E8', '#A7BFE8', ];
+
+
 
 
 
 export default function CircleBackground() {
+  
+  //Checkbox const
+  const [isChecked, setChecked] = useState(false);
+
     return (
       
         <SafeAreaView style={styles.container}>
@@ -35,21 +35,11 @@ export default function CircleBackground() {
                 }]} key={i.toString()} />
             ))}
 <ScrollView >
-            
+        <Card>
+        <AssetExample/>
+        </Card>
 
-            
-      
-       <View style={styles.centerizedView}>
-       
-          <View style={styles.authBox}>
-
-          <Text style={styles.reslve}>You re currently SAD</Text>
-
-           <View style={styles.box}>
-      </View>
-          </View>
-          
-          <LineChart
+         <LineChart
         data={{
           labels: ['Happy', 'Neutral', 'Sad', 'Suprise', 'Scared', 'Angry'],
           datasets: [
@@ -80,40 +70,60 @@ export default function CircleBackground() {
         style={{
           marginVertical: 4,
           borderRadius: 0,
-          marginBottom:4,
+          borderColor:'#ffff',
           top: 10,
         }}
       />
-        </View>
-        
-    <View style={styles.hr}></View>
-       <View style={styles.centerizedView2}>
-          <View style={styles.authBox2}>
-          <Card>
+      
+     
+    <View style={styles.centerizedView}>
+      <View style={styles.paragraph2}>
+          <Card style={styles.card1}>
           <Text style={styles.reslve2}>Note the Emotion</Text>
           </Card>
-          <Text style={styles.emotionre}>It seem that you have a rough day.</Text>
-          <Text style={styles.emotionre}>Would you like to listen to some lo-fi musics that can help you relax?</Text>
-          </View>
-        </View>
+          <Text style={styles.emotionre}>It seem that you have a rough day.Would you like to listen to some lo-fi musics that can help you relax?</Text>
+         
+
+          <View style={styles.section}>
+        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+        <Text style={styles.paragraph}>Yes</Text>
+        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+        <Text style={styles.paragraph}>No</Text>
+      </View>
+   
+      </View>
+    </View>
+
+
+
+      <View style={styles.centerizedView}>
+      <View style={styles.paragraph2}>
+          <Card style={styles.card1}>
+          <Text style={styles.reslve2}>Notification</Text>
+          </Card>
+          <Text style={styles.emotionre}>Would you like to send Notification to Guardian?</Text>
+          <View style={styles.section}>
+        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+        <Text style={styles.paragraph}>Normal checkbox</Text>
+
+         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+        <Text style={styles.paragraph}>Normal checkbox</Text>
+      </View>
+   
+      </View>
+    </View>
+
+
+    
+   
         
-        
-           <View style={styles.hr}></View>
-       <View style={styles.centerizedView2}>
-          <View style={styles.authBox2}>
-        
-          </View>
-        </View>
-        
-        
-        
-        
+       
         
         
 
       
 
-  </ScrollView>
+</ScrollView>
         </SafeAreaView>
 
             
@@ -127,7 +137,7 @@ export default function CircleBackground() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',      
+        justifyContent:'center',      
     },
     bgCircle1: {
         position: 'absolute',
@@ -137,87 +147,53 @@ const styles = StyleSheet.create({
         left: 0,
         top: 0,
     },
-      centerizedView: {
-    width: '100%',
-    top: 2,
-  },
 
- authBox: {
-    width: '100%',
-    height:'25%',
-    backgroundColor: '#fafafa',
-    borderRadius: 0,
-    alignSelf: 'center',
-    paddingHorizontal: 5,
-    paddingBottom: 80,
-    elevation: 5,
-    shadowColor:'#000',
-    shadowOffset:3,
-  },
-    hr: {
-    width: '100%',
-    height: 0.5,
-  
-    opacity:0,
-    marginTop: 6,
-  },
+     card1:{
+      height: 30,
+   } ,
 
-   reslve: {
-    fontSize: 30,
+
+     reslve2: {
+    fontSize: 25,
     textAlign:'center',
-    top : 45,
-  },
-
- box: {
-    width: '100%',
-    height: 400,
-    borderRadius: 0,
-  },
-
-  
-  dtview: {
-    flexDirection: 'row',
-    margin : 5,
-  },
-
-  resultdt: {
-    fontStyle: 'Oswald',
-    color: '#000',
-    fontSize: 20,
-    top:50,
-   
-   
-  },
-//Adivsing
-   centerizedView2: {
-    width: '100%',
-    bottom : 118,
-  },
- authBox2: {
-    width: '100%',
-    backgroundColor: '#fafafa',
-    alignSelf: 'center',
-    paddingHorizontal: 5,
-    paddingBottom: 80,
-    elevation: 5,
-  },
-
- reslve2: {
-    fontSize: 20,
-    textAlign:'left',
     top : 0,
   },
-  
-  emotionre:{
-  fontSize: 19,
-  textAlign:'center',
-  
+    
+    paragraph2: {
+    marginTop: 24,
+    width: '100%',
+    backgroundColor:'#fff',
   },
-   fixToText: {
+    emotionre:{
+      textAlign: 'center',
+      fontSize: 20,
+      marginTop:30
+    },
+
+
+  section: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    top: 30,
+    alignItems: 'center',
+    margin:30,
+    marginHorizontal: 20,
+        marginTop: 5,
   },
+  paragraph: {
+    fontSize: 15,
+  },
+  checkbox: {
+    margin: 8,
+  },
+  
+
+
+
+
+  
+
+
+    
+ 
     
   
 })

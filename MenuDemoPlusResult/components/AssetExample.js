@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image,Dimensions ,SafeAreaView} from 'react-native';
 
 export default function AssetExample() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.paragraph}>
-        Local files and assets can be imported by dragging and dropping them into the editor
-      </Text>
-      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />
-    </View>
+        YOU ARE CURRENTLY SAD
+      </Text>  
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
+    paddingTop: 50,
+    borderColor: '#A7BFE8',
+    },
+
+    
   paragraph: {
-    margin: 24,
-    marginTop: 0,
-    fontSize: 14,
+    marginBottom: 24,
+    fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign:'center',
+    width: Dimensions.get('window').width,
+    
   },
-  logo: {
-    height: 128,
-    width: 128,
-  }
+
 });

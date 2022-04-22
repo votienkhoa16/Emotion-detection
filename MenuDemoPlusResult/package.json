@@ -32,7 +32,8 @@
     "@react-navigation/native-stack": "*",
     "react-native-safe-area-context": "3.3.2",
     "react-native-responsive-linechart": "*",
-    "@react-navigation/material-top-tabs": "*"
+    "@react-navigation/material-top-tabs": "*",
+    "expo-checkbox": "~2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
