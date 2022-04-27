@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Dimensions,TouchableOpacity,SafeAreaView,ScrollView,Modal,Pressable, TextInput,Image,Keyboard,} from 'react-native';
+import { Text, View, StyleSheet, Dimensions,TouchableOpacity,SafeAreaView,ScrollView,Modal,Pressable, TextInput,Image,Keyboard,Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import Constants from 'expo-constants';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
@@ -7,7 +7,7 @@ import {LineChart} from "react-native-chart-kit";
 import { Chart, Line, Area, HorizontalAxis, VerticalAxis } from 'react-native-responsive-linechart';
 
 import AssetExample from './AssetExample';
-
+import Einput from './emailinput';
 const { width } = Dimensions.get('screen');
 const colors = ['#6190E8', '#A7BFE8', ];
 
@@ -76,21 +76,24 @@ export default function CircleBackground() {
       />
       
      
-    <View style={styles.centerizedView}>
+       <View style={styles.centerizedView}>
       <View style={styles.paragraph2}>
           <Card style={styles.card1}>
           <Text style={styles.reslve2}>Note the Emotion</Text>
           </Card>
           <Text style={styles.emotionre}>It seem that you have a rough day.Would you like to listen to some lo-fi musics that can help you relax?</Text>
          
-
-          <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text style={styles.paragraph}>Yes</Text>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text style={styles.paragraph}>No</Text>
+      <View style={{ flexDirection:'row' , justifyContent:'center'}}>
+          
+         <TouchableOpacity
+        style={styles.resultbutton}
+        title="Press me"
+        color="#f194ff"
+        onPress={() => Alert.alert('Button with adjusted color pressed')}>
+        <Text style={styles.sendtext}>Send</Text>
+      </TouchableOpacity>
+     
       </View>
-   
       </View>
     </View>
 
@@ -101,13 +104,17 @@ export default function CircleBackground() {
           <Card style={styles.card1}>
           <Text style={styles.reslve2}>Notification</Text>
           </Card>
-          <Text style={styles.emotionre}>Would you like to send Notification to Guardian?</Text>
-          <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text style={styles.paragraph}>Normal checkbox</Text>
-
-         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text style={styles.paragraph}>Normal checkbox</Text>
+          <Text style={styles.emotionre}>Would you like to send This Result to Guardian?</Text>
+               
+      <View style={{ flexDirection:'row' , justifyContent:'center'}}>
+          
+         <TouchableOpacity
+        style={styles.resultbutton}
+        title="Press me"
+        color="#f194ff"
+        onPress={() => Alert.alert('Button with adjusted color pressed')}>
+        <Text style={styles.sendtext}>Send</Text>
+      </TouchableOpacity>
       </View>
    
       </View>
@@ -167,23 +174,49 @@ const styles = StyleSheet.create({
     emotionre:{
       textAlign: 'center',
       fontSize: 20,
-      marginTop:30
+      marginTop:30,
     },
 
 
   section: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin:30,
-    marginHorizontal: 20,
-        marginTop: 5,
+    margin:20,
+    marginHorizontal: 10,
+    
   },
   paragraph: {
     fontSize: 15,
+    textAlign:'center',
+    
   },
+
+
   checkbox: {
-    margin: 8,
+   
+    
   },
+
+  resultbutton:{
+   marginVertical: 40,
+   width:'30%',
+   height: 30,
+   borderRadius:20,
+   borderColor:'#A7BFE8',
+   borderWidth: 2,
+   backgroundColor:'#A7BFE8',
+},
+
+ sendtext: {
+    fontSize: 15,
+    textAlign:'center',
+    marginTop:3,
+    color:'white',
+    
+    
+    
+  },
+  
   
 
 
