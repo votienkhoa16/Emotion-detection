@@ -137,10 +137,7 @@ export default function InfoDetailList() {
         >
           <View style={styles.textContainer}>
             <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              quis erat suscipit, mollis nibh ut, venenatis lectus. Orci varius
-              natoque penatibus et magnis dis parturient montes, nascetur
-              ridiculus mus.
+             Coming Soon
             </Text>
           </View>
         </AnimatedSection>
