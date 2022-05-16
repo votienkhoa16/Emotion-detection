@@ -30,7 +30,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import HisList from './components/Hislist';
 import Result from './components/Detail';
 import RegandSign from './components/loginandsignin';
-
+import Info from './components/info'; //Details
 
 
 const { width } = Dimensions.get('screen');
