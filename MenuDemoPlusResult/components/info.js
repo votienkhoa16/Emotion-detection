@@ -94,7 +94,9 @@ export default function InfoDetailList() {
           <View style={styles.textContainer}>
             <Text>
               The Result will display the both on chart and the status of the emotion that you are on.
-              If the current status that you are Sad, there will be a section that you can send to your guardian to know your mood by type the input of their email
+              If the current status that you are Sad, there will be a section that you can send to your guardian to know your mood by type the input of their email, however,
+               this section will only display if The user is SAD 
+              
             </Text>
           </View>
         </AnimatedSection>
