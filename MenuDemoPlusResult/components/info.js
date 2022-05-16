@@ -122,26 +122,7 @@ export default function InfoDetailList() {
         </AnimatedSection>
       </View>
 
-        <Separator/>
-  
-         <View style={styles.overflow}>
-        <TouchableOpacity onPress={onPress} style={styles.button}>
-          <Text style={styles.buttonText}>
-            {state === 'expanded' ? 'Credit' : 'Credit'}
-          </Text>
-        </TouchableOpacity>
-        <AnimatedSection
-          animatedHeight={animatedHeight}
-          onLayout={onLayout}
-          state={state}
-        >
-          <View style={styles.textContainer}>
-            <Text>
-             Coming Soon
-            </Text>
-          </View>
-        </AnimatedSection>
-      </View>
+
         
 
         </ScrollView>
