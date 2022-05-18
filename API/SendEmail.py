@@ -1,10 +1,7 @@
 import smtplib
-from pathlib import Path
 from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
-from email import encoders
 
 
 def send_email(emailProtector, username):
@@ -12,8 +9,8 @@ def send_email(emailProtector, username):
     send_from = "DLA"
     send_to = emailProtector
     subject = "Result from " + username
-    body = "*THIS IS AN AUTO EMAIL, PLEASE DO NOT RESPOND!\nHello, this an auto email from emotion detector app, your friend, " + \
-        username + "is currently sad right now, and he/she needs to talk with you."
+    body = "*THIS IS AN AUTO EMAIL, PLEASE DO NOT RESPOND!\n\nHello, this an auto email from emotion detector app, your friend, " + \
+        username + " is currently sad right now, and he/she needs to talk with you."
     username = "emotionbotsora1123@gmail.com"
     password = "emotion1123"
 

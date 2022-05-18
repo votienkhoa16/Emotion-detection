@@ -45,7 +45,10 @@ function LoginScreen(props) {
         ToastAndroid.show(data, ToastAndroid.LONG);
       }
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error);
+      ToastAndroid.show("The app couldn't connect to the server, please try again.", ToastAndroid.LONG);
+    })
     }
   }
 

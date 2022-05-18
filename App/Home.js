@@ -112,9 +112,9 @@ export default function HomeScreen(props) {
                 backgroundColor: pressed ? '#6190E8' : '#fff',
               },
             ]}
-            onPress={() => props.navigation.navigate('History')}>
+            onPress={() => props.navigation.navigate('ResultsList')}>
             <Feather name="book" size={30} color="black" />
-            <Text>History</Text>
+            <Text> Results</Text>
           </Pressable>
         </View>
       </View>
@@ -134,7 +134,7 @@ export default function HomeScreen(props) {
                 backgroundColor: pressed ? '#6190E8' : '#fff',
               },
             ]}
-            onPress={() => Alert.alert('Details button Pressed!')}>
+            onPress={() => props.navigation.navigate('History')}>
             <SimpleLineIcons name="detail" size={30} color="black" />
             <Text>Details</Text>
           </Pressable>
@@ -156,7 +156,7 @@ export default function HomeScreen(props) {
             ]}
            onPress={() => logout()}>
             <Entypo name="log-out" size={30} color="black" />
-            <Text>LogOut</Text>
+            <Text>Log Out</Text>
           </Pressable>
         </View>
       </View>

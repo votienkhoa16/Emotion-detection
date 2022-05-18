@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, ScrollView, 
-  Modal, TextInput, Image, ActivityIndicator, Pressable, 
-  TouchableWithoutFeedback} from 'react-native';
+  Modal, TextInput, ActivityIndicator, Pressable} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BackHandler, ToastAndroid } from 'react-native'
 import { Card } from 'react-native-paper';
 import {LineChart} from "react-native-chart-kit";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
 
 
 
@@ -21,6 +21,8 @@ export default function ResultScreen(props) {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [sound, setSound] = useState(new Audio.Sound());
 
   //emotion accuracy values
   //'angry' = 0, 'disgust' = 1, 'fear' = 2, 'happy' = 3, 'sad' = 4, 'suprise' = 5, 'neutral' = 6
@@ -67,17 +69,15 @@ export default function ResultScreen(props) {
     
     //get each value to each emotion accuracy
     //'angry' = 0, 'disgust' = 1, 'fear' = 2, 'happy' = 3, 'sad' = 4, 'surprise' = 5, 'neutral' = 6, 'predicted emotion' = 7, 'advice' = 8
-    setAngry(emotionValues[0]);
-    setDisgust(emotionValues[1]);
-    setFear(emotionValues[2]);
-    setHappy(emotionValues[3]);
-    setSad(emotionValues[4]);
-    setSuprise(emotionValues[5]);
-    setNeutral(emotionValues[6]);
+    setAngry(Number(emotionValues[0]));
+    setDisgust(Number(emotionValues[1]));
+    setFear(Number(emotionValues[2]));
+    setHappy(Number(emotionValues[3]));
+    setSad(Number(emotionValues[4]));
+    setSuprise(Number(emotionValues[5]));
+    setNeutral(Number(emotionValues[6]));
     setPredictedEmotion(emotionValues[7]);
 
-    console.log(predictedEmotion);
-    //show the notification if the predictedEmotion = 'sad'
     //get the advice
     setAdvice(emotionValues[8]);
   }
@@ -85,12 +85,18 @@ export default function ResultScreen(props) {
   //save result to the database
   const saveResult = async() => {
       const username = await AsyncStorage.getItem('user');
+
+      //get accuracy value of predicted emotion
+      let maxValue = Math.max(angryAccuracy, disgustAccuracy, fearAccuracy, happyAccuracy, 
+        sadAccuracy, supriseAccuracy, neutralAccuracy);
+
       await fetch (global.api + 'upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({username: username, result: predictedEmotion})
+      body: JSON.stringify({username: username, result: predictedEmotion, 
+                            resultAcc: maxValue})
       })
       .then(resp => resp.json())
       .then(data => {
@@ -113,28 +119,37 @@ export default function ResultScreen(props) {
     //get username 
     const username = await AsyncStorage.getItem('user');
 
-    fetch(global.api + 'email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username: username, email: email})
-    })
-    .then( resp => resp.json() )
-    .then( msg => {
-      if (msg = 'SUCCESS'){
-        ToastAndroid.show('Email is sent! Hope they will recieve the email soon.', ToastAndroid.LONG);
-        setModalVisible(false);
-      } else {
-        ToastAndroid.show(msg, ToastAndroid.LONG);
-      }
-    } )
-    .catch( error => console.log(error) )
+    if (email == ""){
+      ToastAndroid.show("Please input your protector's email!", ToastAndroid.LONG);
+    } else {
+      fetch(global.api + 'email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username: username, email: email})
+      })
+      .then( resp => resp.json() )
+      .then( msg => {
+        if (msg = 'SUCCESS'){
+          ToastAndroid.show('Email is sent! Hope they will recieve the email soon.', ToastAndroid.LONG);
+          setModalVisible(false);
+        } else {
+          ToastAndroid.show(msg, ToastAndroid.LONG);
+        }
+      } )
+      .catch( error => console.log(error) )
+    }
+    
   }
 
+
+
   //custom back button to go back Home screen
-  const backActionHandler = () => {
+  const backActionHandler = async () => {
     props.navigation.navigate('Home');
+    //await sound.stopAsync();
+    //await sound.unloadAsync();
     return true;
   }
 
@@ -143,9 +158,11 @@ export default function ResultScreen(props) {
     //Add event listener for hardware back button press on Android
     BackHandler.addEventListener("hardwareBackPress", backActionHandler);
 
+    
     return () =>
       //clear/remove event listener
       BackHandler.removeEventListener("hardwareBackPress", backActionHandler);
+
   }, []);
 
   if (isLoading == true){
@@ -172,6 +189,8 @@ export default function ResultScreen(props) {
                   ]
                 }]} key={i.toString()} />
         ))}
+        <TouchableOpacity
+         onPress={() => setModalVisible(false)}>
         <ScrollView >
           <Card>
           </Card>
@@ -241,7 +260,6 @@ export default function ResultScreen(props) {
           </View>
         </View>
 
-        <TouchableWithoutFeedback style={styles.emailcenteredView} onPress={() => setModalVisible(false)}>
           <Modal
             animationType="slide"
             transparent={true}
@@ -267,7 +285,6 @@ export default function ResultScreen(props) {
               </View>
             </View>
           </Modal>
-        </TouchableWithoutFeedback>
 
           <TouchableOpacity
             style={styles.resultbutton}
@@ -277,6 +294,7 @@ export default function ResultScreen(props) {
             <Text style={styles.sendtext}>Send email</Text>
           </TouchableOpacity>
         </ScrollView>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   } 
@@ -292,6 +310,7 @@ export default function ResultScreen(props) {
                   ]
                 }]} key={i.toString()} />
         ))}
+        <Text style={styles.title}>YOUR RESULT</Text>
         <ScrollView >
           <Card>
           </Card>
@@ -378,7 +397,7 @@ const styles = StyleSheet.create({
   },
 
   card1:{
-    height: 40,
+    height: 35,
   },
 
   reslve2: {
@@ -397,7 +416,7 @@ const styles = StyleSheet.create({
   emotionre:{
     textAlign: 'center',
     fontSize: 20,
-    marginTop:30
+    marginTop:10
   },
 
   section: {
@@ -498,6 +517,16 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontSize:15,
+  },
+
+  title: {
+    textAlign: 'center',
+    bottom: 50,
+    fontSize: 40,
+    fontWeight: '400',
+    color: '#FFF',
+    marginTop: 80,
+    marginBottom: 1,
   },
 
   emailtextinput:{

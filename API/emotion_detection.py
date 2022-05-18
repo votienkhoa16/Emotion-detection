@@ -2,12 +2,8 @@ from distutils.log import error
 from black import nullcontext
 from deepface import DeepFace
 from deepface.commons import functions, realtime, distance as dst
-import cv2 as cv
-# import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 from tqdm import tqdm
-import os
+import numpy as np
 
 
 def calculatePredictions(emotionPredictions, sumOfPredictions):
@@ -87,7 +83,7 @@ def analyze(imgPath, models=None, enforce_detection=True, detectorBackend='openc
         print("Neutral: ", neutralAccuracy, "%")
 
         # get predicted emotion
-        dominantEmotion = 'sad'  # emotionLabels[np.argmax(emotionPredictions)]
+        dominantEmotion = emotionLabels[np.argmax(emotionPredictions)]
         print("Predicted emotion: ", dominantEmotion)
 
         # label advice with predicted emotion
@@ -116,7 +112,7 @@ def getAdvice(detectedEmotion):
         words = "You must be angry with someone and it may be not worth. Just try to calm yourself. Maybe a good humor video can help you."
 
     if (detectedEmotion == 'sad'):
-        words = "I see you have a rough day. I can have some lo-fi musics that can help you relax. Would you like to listen to it?"
+        words = "I see you have a rough day. Don't worry, you can get though this. I suggest you can take a walk at a park and have a nice view of nature and  people. You can listen to Lo-fi music, this is a type of music that can help you calm yourself and relax."
 
     if (detectedEmotion == 'surprise'):
         words = "There is something that surprise you, isn't it? Hope you can share with me."
