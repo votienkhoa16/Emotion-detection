@@ -12,7 +12,7 @@ import {
 } from 'reanimated-collapsible-helpers';
 const { width } = Dimensions.get('screen');
 const colors = ['#6190E8', '#A7BFE8', ]
-const Separator = () => <View style={styles.separator} />;
+
 
 
 //MenuScreen//Screen1
@@ -29,7 +29,6 @@ export default function InfoDetailList() {
                     ]
                 }]} key={i.toString()} />
             ))}
-
 
 
          <Text style={styles.text}></Text> 
@@ -55,7 +54,8 @@ export default function InfoDetailList() {
         </AnimatedSection>
       </View>
 
-  <Separator/>
+      
+        <View style={styles.seperator}/>
 
          <View style={styles.overflow}>
         <TouchableOpacity onPress={onPress} style={styles.button}>
@@ -78,8 +78,8 @@ export default function InfoDetailList() {
         </AnimatedSection>
       </View>
 
-    <Separator/>
-  
+        <View style={styles.seperator}/>
+
          <View style={styles.overflow}>
         <TouchableOpacity onPress={onPress} style={styles.button}>
           <Text style={styles.buttonText}>
@@ -101,9 +101,8 @@ export default function InfoDetailList() {
           </View>
         </AnimatedSection>
       </View>
-
-    
-    <Separator/>
+      
+      <View style={styles.seperator}/>
   
          <View style={styles.overflow}>
         <TouchableOpacity onPress={onPress} style={styles.button}>
@@ -168,18 +167,12 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
 
-  // instro1: {
-  //   textAlign: 'center',
-  //   marginVertical: 8,
-  //   fontSize:20,
-  // },
-
-   separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    opacity:'100%',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  seperator:{
+    marginVertical: 4,
+   
   },
+
+ 
 
    overflow: {
     overflow: 'hidden',
